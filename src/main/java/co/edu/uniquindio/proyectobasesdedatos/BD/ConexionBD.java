@@ -1,7 +1,5 @@
 package co.edu.uniquindio.proyectobasesdedatos.BD;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ConexionBD {
 
@@ -10,6 +8,8 @@ public class ConexionBD {
     private Connection cx;
     private String usr = "PROYECTOBASES";
     private String passwd = "admin1234";
+    private Statement statement;
+    private ResultSet resultSet;
 
     public static void main(String[] args) {
 
