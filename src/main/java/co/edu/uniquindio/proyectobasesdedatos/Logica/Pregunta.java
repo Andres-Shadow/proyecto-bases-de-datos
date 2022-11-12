@@ -70,13 +70,6 @@ public class Pregunta {
 
     @Override
     public String toString() {
-        return "Pregunta{" +
-                "encuesttaTipo=" + encuesttaTipo +
-                ", id_encuesta=" + id_encuesta +
-                ", id_grupo=" + id_grupo +
-                ", codigo=" + codigo +
-                ", tipo=" + tipo +
-                ", enunciado='" + enunciado + '\'' +
-                '}';
+        return enunciado;
     }
 }

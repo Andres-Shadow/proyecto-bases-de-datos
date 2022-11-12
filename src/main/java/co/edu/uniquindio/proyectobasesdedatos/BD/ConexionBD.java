@@ -1,5 +1,8 @@
 package co.edu.uniquindio.proyectobasesdedatos.BD;
+import co.edu.uniquindio.proyectobasesdedatos.Logica.Pregunta;
+
 import java.sql.*;
+import java.util.ArrayList;
 
 public class ConexionBD {
 
@@ -33,6 +36,32 @@ public class ConexionBD {
             System.out.println("No se conectó a la base de datos mi rey");
         }
         return cx;
+    }
+
+    public ArrayList<Pregunta> listarPreguntas(){
+
+        ArrayList<Pregunta> lista = new ArrayList<>();
+        try{
+            statement = cx.createStatement();
+            resultSet = statement.executeQuery("SELECT * FROM pregunta");
+
+            while (resultSet.next()){
+                lista.add(new Pregunta(
+                        resultSet.getInt("ENCUESTA_TIPO"),
+                        resultSet.getInt("ENCUESTA"),
+                        resultSet.getInt("GRUPO"),
+                        resultSet.getInt("CODIGO"),
+                        resultSet.getInt("TIPO"),
+                        resultSet.getString("ENUNCIADO")
+                ));
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return lista;
+
     }
 
 
