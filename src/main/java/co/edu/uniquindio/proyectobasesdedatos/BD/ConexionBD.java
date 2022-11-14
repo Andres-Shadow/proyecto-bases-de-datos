@@ -1,8 +1,11 @@
 package co.edu.uniquindio.proyectobasesdedatos.BD;
+import co.edu.uniquindio.proyectobasesdedatos.Logica.Opcion;
 import co.edu.uniquindio.proyectobasesdedatos.Logica.Pregunta;
+import oracle.jdbc.proxy.annotation.Pre;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ConexionBD {
 
@@ -62,6 +65,30 @@ public class ConexionBD {
 
         return lista;
 
+    }
+
+
+    public ArrayList<Opcion> listarOpcionesPregunta(Pregunta pregunta){
+        ArrayList<Opcion> lista = new ArrayList<>();
+        try{
+            statement = cx.createStatement();
+            resultSet = statement.executeQuery("select * from opcion where pregunta="+pregunta.getCodigo()+" and grupo="+pregunta.getId_grupo());
+
+            while (resultSet.next()){
+                lista.add(new Opcion(
+                        resultSet.getInt("encuesta_tipo"),
+                        resultSet.getInt("encuesta"),
+                        resultSet.getInt("grupo"),
+                        resultSet.getInt("pregunta"),
+                        resultSet.getInt("codigo"),
+                        resultSet.getString("texto")
+                ));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return lista;
     }
 
 

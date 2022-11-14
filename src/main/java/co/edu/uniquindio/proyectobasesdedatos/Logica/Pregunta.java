@@ -1,5 +1,8 @@
 package co.edu.uniquindio.proyectobasesdedatos.Logica;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Pregunta {
 
 
@@ -10,6 +13,7 @@ public class Pregunta {
     private int tipo;
     private String enunciado;
 
+    private List<Opcion> opciones = new ArrayList<>();
 
     public Pregunta(int encuesttaTipo, int id_encuesta, int id_grupo, int codigo, int tipo, String enunciado){
         this.encuesttaTipo = encuesttaTipo;
