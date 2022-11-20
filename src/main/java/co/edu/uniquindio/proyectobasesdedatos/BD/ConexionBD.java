@@ -1,4 +1,5 @@
 package co.edu.uniquindio.proyectobasesdedatos.BD;
+import co.edu.uniquindio.proyectobasesdedatos.Logica.Encuesta;
 import co.edu.uniquindio.proyectobasesdedatos.Logica.Opcion;
 import co.edu.uniquindio.proyectobasesdedatos.Logica.Pregunta;
 import oracle.jdbc.proxy.annotation.Pre;
@@ -89,6 +90,30 @@ public class ConexionBD {
         }
 
         return lista;
+    }
+
+    public boolean agregarPreguntasEncuesta(ArrayList<Pregunta> preguntas, Encuesta encuesta){
+        boolean centinela = false;
+
+        for(Pregunta p: preguntas){
+            //TODO AGREGAR PREGUNTAS
+        }
+
+        return  centinela;
+    }
+
+    public boolean crearEncuesta(Encuesta e){
+        try{
+            statement = cx.createStatement();
+
+            String sentencia2 = "insert into encuesta values("+e.getCodigo()+","+e.getTipo()+ ",\'" +e.getNombre()+ "\'," +e.getCategoria()+","+e.getRango_edades()+","+e.getGenero_objetivo()+")";
+            System.out.println(sentencia2);
+            resultSet = statement.executeQuery(sentencia2);
+        }catch (SQLException e2){
+            e2.printStackTrace();
+        }
+
+        return true;
     }
 
 
