@@ -18,6 +18,8 @@ public class ConexionBD {
     private Statement statement;
     private ResultSet resultSet;
 
+
+
     public static void main(String[] args) {
 
         ConexionBD conexion  = new ConexionBD();
@@ -47,16 +49,14 @@ public class ConexionBD {
         ArrayList<Pregunta> lista = new ArrayList<>();
         try{
             statement = cx.createStatement();
-            resultSet = statement.executeQuery("SELECT * FROM pregunta");
+            resultSet = statement.executeQuery("select p.codigo,p.tipo,p.enunciado,p.grupo from pregunta p");
 
             while (resultSet.next()){
                 lista.add(new Pregunta(
-                        resultSet.getInt("ENCUESTA_TIPO"),
-                        resultSet.getInt("ENCUESTA"),
-                        resultSet.getInt("GRUPO"),
                         resultSet.getInt("CODIGO"),
                         resultSet.getInt("TIPO"),
-                        resultSet.getString("ENUNCIADO")
+                        resultSet.getString("ENUNCIADO"),
+                        resultSet.getInt("GRUPO")
                 ));
             }
 
@@ -92,15 +92,7 @@ public class ConexionBD {
         return lista;
     }
 
-    public boolean agregarPreguntasEncuesta(ArrayList<Pregunta> preguntas, Encuesta encuesta){
-        boolean centinela = false;
 
-        for(Pregunta p: preguntas){
-            //TODO AGREGAR PREGUNTAS
-        }
-
-        return  centinela;
-    }
 
     public boolean crearEncuesta(Encuesta e){
         try{
@@ -115,6 +107,81 @@ public class ConexionBD {
 
         return true;
     }
+
+
+
+    public boolean terminarEncusta(Encuesta e, int grupo){
+        try {
+            statement = cx.createStatement();
+            int codigo = contarCantidadPreguntas();
+            for(Pregunta p: e.getPreguntas()){
+                String sentencia = "insert into pregunta values ("+e.getTipo()+","+e.getCodigo()+","+grupo+","+codigo+","+p.getTipo()+",\'"+p.getEnunciado()+"\')";
+                resultSet = statement.executeQuery(sentencia);
+                System.out.println(sentencia);
+                codigo++;
+            }
+
+            return true;
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+
+    public boolean crearGrupo(int encuesta_tipo, int encuesta, int codigo, String enunciado){
+        try{
+            statement = cx.createStatement();
+
+            String sentencia2 = "insert into grupo_preguntas values("+encuesta_tipo+","+encuesta+ "," +codigo+ ",\'" +enunciado+"\')";
+            System.out.println(sentencia2);
+            System.out.println(sentencia2);
+            resultSet = statement.executeQuery(sentencia2);
+        }catch (SQLException e2){
+            e2.printStackTrace();
+        }
+
+        return true;
+
+    }
+
+    public int contarCantidadPreguntas(){
+        int valor=0;
+
+        try{
+
+            statement = cx.createStatement();
+            resultSet = statement.executeQuery("select count(p.codigo) from pregunta p");
+
+            while (resultSet.next()){
+                valor = resultSet.getInt("COUNT(P.CODIGO)");
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return valor;
+    }
+
+    public int contarCantidadGrupo(){
+        int valor = 0;
+        try{
+
+            statement = cx.createStatement();
+            resultSet = statement.executeQuery("select count(c.codigo) from grupo_preguntas c");
+
+            while (resultSet.next()){
+                valor = resultSet.getInt("COUNT(C.CODIGO)");
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return valor;
+    }
+
+
+
 
 
 }

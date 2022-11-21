@@ -22,8 +22,8 @@ public class ControladorPrincipal implements Initializable {
 
     private ConexionBD conexion;
     private Pregunta preguntaSeleccionada;
-    private ArrayList<Pregunta> preguntasSeleccionadas;
-
+    private Encuesta encuesta;
+    private int grupo;
 
     /**------ VISTA ----------**/
 
@@ -40,6 +40,14 @@ public class ControladorPrincipal implements Initializable {
     private ComboBox<String> comboTipo;
     @FXML
     private Button btnAddPregunta;
+
+
+    @FXML
+    private TextField txtNombreGrupo;
+
+
+    @FXML
+    private Button btnCrearGrupo;
 
     @FXML
     private TextField txtCodEn;
@@ -61,7 +69,6 @@ public class ControladorPrincipal implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.preguntasSeleccionadas = new ArrayList<>();
         conexion = new ConexionBD();
         conexion.conectar();
         setearListView();
@@ -103,10 +110,12 @@ public class ControladorPrincipal implements Initializable {
 
         boolean a = this.conexion.crearEncuesta(e);
 
-        if(!a)
+        if(!a){
             System.out.println("nonas mi pez");
+        }
         else{
             System.out.println("sisas mi pez");
+            this.encuesta = e;
             this.btnAddPregunta.setVisible(true);
         }
 
@@ -116,16 +125,33 @@ public class ControladorPrincipal implements Initializable {
 
     @FXML
     public void agregarPregunta(){
-        Pregunta p =  this.preguntaSeleccionada;
-        this.preguntasSeleccionadas.add(p);
 
-        //TODO implementar el agregar pregunta
+        boolean centinela = encuesta.agregarPreguntas(preguntaSeleccionada);
 
-        for (Pregunta p2: this.preguntasSeleccionadas){
-            System.out.println(p2.getEnunciado());
-        }
+        if(centinela)
+            System.out.println("pregunta agregada");
+        else
+            System.out.println("pregunta repetida");
     }
 
+
+    @FXML
+    public void terminarEncuesta(){
+
+        boolean centinela = conexion.terminarEncusta(this.encuesta, grupo);
+    }
+
+    @FXML
+    public void crearGrupo(){
+        String enunciado = txtNombreGrupo.getText();
+        int encuesta_tipo = this.encuesta.getTipo();
+        int encuesta = this.encuesta.getCodigo();
+        int codigo = conexion.contarCantidadGrupo()+1;
+
+        conexion.crearGrupo(encuesta_tipo, encuesta, codigo, enunciado);
+        this.grupo = codigo;
+    }
+    /**---------------- MEOTODOS VISUALES ------------------------**/
     public void setearListView(){
         ArrayList<Pregunta> lista = conexion.listarPreguntas();
         this.lista.getItems().addAll(lista);

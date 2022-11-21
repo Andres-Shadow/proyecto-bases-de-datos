@@ -24,6 +24,13 @@ public class Pregunta {
         this.enunciado = enunciado;
     }
 
+    public Pregunta(int codigo, int tipo, String enunciado ,int grupo){
+        this.codigo = codigo;
+        this.tipo = tipo;
+        this.id_grupo = grupo;
+        this.enunciado = enunciado;
+    }
+
     public int getEncuesttaTipo() {
         return encuesttaTipo;
     }

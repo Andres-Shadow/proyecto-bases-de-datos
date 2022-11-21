@@ -12,21 +12,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyectobasesdedatos.Controladores.ControladorPrincipal">
+<AnchorPane prefHeight="666.0" prefWidth="913.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyectobasesdedatos.Controladores.ControladorPrincipal">
    <children>
-      <TabPane prefHeight="522.0" prefWidth="781.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="666.0" prefWidth="913.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Creacion encuestas">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <AnchorPane prefHeight="494.0" prefWidth="782.0">
+                        <AnchorPane prefHeight="638.0" prefWidth="913.0">
                            <children>
                               <ListView fx:id="lista" layoutX="14.0" layoutY="14.0" prefHeight="466.0" prefWidth="269.0" />
-                              <Label layoutX="306.0" layoutY="275.0" text="Pregunta:" />
-                              <TextArea fx:id="area_pregunta" layoutX="306.0" layoutY="309.0" prefHeight="26.0" prefWidth="330.0" />
-                              <ListView fx:id="list_opciones" layoutX="306.0" layoutY="358.0" prefHeight="52.0" prefWidth="330.0" />
-                              <Button fx:id="btnAddPregunta" layoutX="302.0" layoutY="435.0" mnemonicParsing="false" onAction="#agregarPregunta" text="Agregar Pregunta" />
                               <Label layoutX="318.0" layoutY="37.0" text="Codigo encuesta" />
                               <Label layoutX="318.0" layoutY="67.0" text="Tipo" />
                               <Label layoutX="318.0" layoutY="101.0" text="Nombre" />
@@ -40,6 +36,14 @@
                               <ComboBox fx:id="comboEdades" layoutX="434.0" layoutY="162.0" prefWidth="150.0" />
                               <ComboBox fx:id="comboGenero" layoutX="434.0" layoutY="192.0" prefWidth="150.0" />
                               <TextField fx:id="txtNombre" layoutX="435.0" layoutY="96.0" prefHeight="26.0" prefWidth="149.0" />
+                              <Label layoutX="318.0" layoutY="418.0" text="Pregunta:" />
+                              <TextArea fx:id="area_pregunta" layoutX="320.0" layoutY="448.0" prefHeight="26.0" prefWidth="330.0" />
+                              <ListView fx:id="list_opciones" layoutX="320.0" layoutY="493.0" prefHeight="52.0" prefWidth="330.0" />
+                              <Button fx:id="btnAddPregunta" layoutX="659.0" layoutY="467.0" mnemonicParsing="false" onAction="#agregarPregunta" text="Agregar Pregunta" />
+                              <Button layoutX="371.0" layoutY="558.0" mnemonicParsing="false" onAction="#terminarEncuesta" text="Terminar encuesta" />
+                              <Label layoutX="316.0" layoutY="332.0" text="Grupo" />
+                              <TextField fx:id="txtNombreGrupo" layoutX="371.0" layoutY="328.0" prefHeight="26.0" prefWidth="278.0" />
+                              <Button fx:id="btnCrearGrupo" layoutX="470.0" layoutY="378.0" mnemonicParsing="false" onAction="#crearGrupo" text="Crear grupo" />
                            </children>
                         </AnchorPane>
                      </children>

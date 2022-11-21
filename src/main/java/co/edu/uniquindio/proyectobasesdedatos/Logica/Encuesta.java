@@ -71,10 +71,19 @@ public class Encuesta   {
         this.genero_objetivo = genero_objetivo;
     }
 
-    public boolean agregarPreguntas(){
+    public ArrayList<Pregunta> getPreguntas() {
+        return preguntas;
+    }
 
+    public void setPreguntas(ArrayList<Pregunta> preguntas) {
+        this.preguntas = preguntas;
+    }
 
-
-        return true;
+    public boolean agregarPreguntas(Pregunta p){
+        if(!this.preguntas.contains(p)){
+            this.preguntas.add(p);
+            return true;
+        }
+        return false;
     }
 }
