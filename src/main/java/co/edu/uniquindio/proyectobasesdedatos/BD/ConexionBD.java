@@ -165,11 +165,19 @@ public class ConexionBD {
         try {
             statement = cx.createStatement();
             int codigo = contarCantidadPreguntas();
+
+            int codigoOpcion = contarOpciones()+1;
             for(Pregunta p: e.getPreguntas()){
+                p.setCodigo(codigo);
                 String sentencia = "insert into pregunta values ("+e.getTipo()+","+e.getCodigo()+","+grupo+","+codigo+","+p.getTipo()+",\'"+p.getEnunciado()+"\')";
                 resultSet = statement.executeQuery(sentencia);
                 System.out.println(sentencia);
+
+                sentencia = "insert into opcion values ("+e.getTipo()+","+e.getCodigo()+","+grupo+","+codigo+","+codigoOpcion+",\'opcion de respuesta \')";
+                System.out.println(sentencia);
+                resultSet = statement.executeQuery(sentencia);
                 codigo++;
+                codigoOpcion++;
             }
 
             return true;
@@ -178,6 +186,24 @@ public class ConexionBD {
         }
     }
 
+
+    public int contarOpciones(){
+        int valor = 0;
+        try{
+
+            statement = cx.createStatement();
+            resultSet = statement.executeQuery("select count(o.codigo) from opcion o");
+
+            while (resultSet.next()){
+                valor = resultSet.getInt("COUNT(O.CODIGO)");
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return valor;
+    }
 
     public boolean crearGrupo(int encuesta_tipo, int encuesta, int codigo, String enunciado){
         try{

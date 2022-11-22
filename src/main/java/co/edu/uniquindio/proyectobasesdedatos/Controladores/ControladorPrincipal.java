@@ -120,6 +120,15 @@ public class ControladorPrincipal implements Initializable {
             }
         });
 
+
+        list_opciones.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Opcion>() {
+            @Override
+            public void changed(ObservableValue<? extends Opcion> observable, Opcion oldValue, Opcion newValue) {
+
+            }
+        });
+
+
         String[] tipo = {"publica","privada"};
         String[] categoria = {"academico", "deportes"};
         String[] edades = {"15-18","18-25","25-35"};
