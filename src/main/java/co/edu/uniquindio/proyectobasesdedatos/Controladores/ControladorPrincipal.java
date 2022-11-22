@@ -30,7 +30,9 @@ public class ControladorPrincipal implements Initializable {
 
     /**------ VISTA ENCUESTAS ----------**/
     private Encuesta encuestaSeleccionadaPresentacion;
-    private int contadorIndicesGrupo=0;
+    private int contadorIndicesGrupo = 0;
+    private int contadorPreguntasPresentacion = 0;
+    private ArrayList<Pregunta> listaPreguntasPresentacion;
 
 
     @FXML
@@ -95,6 +97,7 @@ public class ControladorPrincipal implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        this.listaPreguntasPresentacion = new ArrayList<>();
         conexion = new ConexionBD();
         conexion.conectar();
         setearListView();
@@ -192,6 +195,7 @@ public class ControladorPrincipal implements Initializable {
     public void setearValoresPresentacion(){
 
         ArrayList<Grupo> gruposEncuesta = conexion.obtenerNombreGrupo(this.encuestaSeleccionadaPresentacion);
+        this.listaPreguntasPresentacion = conexion.listarPreguntasSegunEncuesta(this.encuestaSeleccionadaPresentacion);
 
         if(gruposEncuesta.isEmpty())
             System.out.println("grupovacio");
@@ -205,6 +209,16 @@ public class ControladorPrincipal implements Initializable {
                 this.contadorIndicesGrupo++;
             }
         }
+
+        if(this.listaPreguntasPresentacion.size()==1){
+            txtPreguntaPresentacion.setText(this.listaPreguntasPresentacion.get(0).getEnunciado());
+        }else{
+            if(contadorPreguntasPresentacion!=this.listaPreguntasPresentacion.size()){
+                txtPreguntaPresentacion.setText(this.listaPreguntasPresentacion.get(contadorPreguntasPresentacion).getEnunciado());
+                this.contadorPreguntasPresentacion++;
+            }
+        }
+
 
     }
 

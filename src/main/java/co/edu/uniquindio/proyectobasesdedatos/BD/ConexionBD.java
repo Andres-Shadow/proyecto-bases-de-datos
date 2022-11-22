@@ -71,8 +71,28 @@ public class ConexionBD {
 
     public ArrayList<Pregunta> listarPreguntasSegunEncuesta(Encuesta encuesta){
 
+        ArrayList<Pregunta> listaPreguntas = new ArrayList<>();
 
-        return null;
+        try{
+            statement = cx.createStatement();
+            resultSet = statement.executeQuery("select * from pregunta where encuesta="+encuesta.getCodigo());
+            
+
+            while (resultSet.next()){
+                listaPreguntas.add(new Pregunta(
+                        resultSet.getInt("ENCUESTA_TIPO"),
+                        resultSet.getInt("ENCUESTA"),
+                        resultSet.getInt("GRUPO"),
+                        resultSet.getInt("CODIGO"),
+                        resultSet.getInt("TIPO"),
+                        resultSet.getString("ENUNCIADO")
+                ));
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return listaPreguntas;
     }
 
 
