@@ -172,7 +172,7 @@ public class ConexionBD {
                 resultSet = statement.executeQuery(sentencia);
                 System.out.println(sentencia);
 
-                sentencia = "insert into opcion values ("+e.getTipo()+","+e.getCodigo()+","+grupo+","+codigo+","+codigoOpcion+",\'opcion de respuesta \')";
+                sentencia = "insert into opcion values ("+e.getTipo()+","+e.getCodigo()+","+grupo+","+codigo+","+codigoOpcion+",\'opcion de respuesta de la pregunta"+codigo+"\')";
                 System.out.println(sentencia);
                 resultSet = statement.executeQuery(sentencia);
                 codigo++;

@@ -186,11 +186,6 @@ public class ControladorPrincipal implements Initializable {
 
 
     @FXML
-    public void responderPregunta(){
-
-    }
-
-    @FXML
     public void crearGrupo(){
         String enunciado = txtNombreGrupo.getText();
         int encuesta_tipo = this.encuesta.getTipo();
@@ -232,7 +227,7 @@ public class ControladorPrincipal implements Initializable {
                 txtPreguntaPresentacion.setText(this.listaPreguntasPresentacion.get(contadorPreguntasPresentacion).getEnunciado());
                 ArrayList<Opcion> opcions = conexion.listarOpcionesPregunta(this.listaPreguntasPresentacion.get(contadorPreguntasPresentacion));
                 setearOpcionesPresentacion(opcions);
-                this.contadorPreguntasPresentacion++;
+
             }
         }
 
@@ -247,7 +242,22 @@ public class ControladorPrincipal implements Initializable {
 
         boolean correcto = conexion.insertarRespuesta(this.encuestaSeleccionadaPresentacion, this.presentacion, seleccionada, preguntaPresentacion);
 
+        if(correcto){
+            System.out.println("respuesta agregada");
+        }
+    }
 
+    @FXML
+    public void cambiarPregunta(){
+        this.contadorPreguntasPresentacion++;
+        if(this.listaPreguntasPresentacion.size()!=1){
+            if(contadorPreguntasPresentacion!=this.listaPreguntasPresentacion.size()){
+                txtPreguntaPresentacion.setText(this.listaPreguntasPresentacion.get(contadorPreguntasPresentacion).getEnunciado());
+                ArrayList<Opcion> opcions = conexion.listarOpcionesPregunta(this.listaPreguntasPresentacion.get(contadorPreguntasPresentacion));
+                setearOpcionesPresentacion(opcions);
+
+            }
+        }
     }
 
     /**---------------- MEOTODOS VISUALES ------------------------**/
