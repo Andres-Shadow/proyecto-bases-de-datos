@@ -102,6 +102,8 @@ public class ConexionBD {
             statement = cx.createStatement();
             resultSet = statement.executeQuery("select * from opcion where pregunta="+pregunta.getCodigo()+" and grupo="+pregunta.getId_grupo());
 
+            System.out.println("select * from opcion where pregunta="+pregunta.getCodigo()+" and grupo="+pregunta.getId_grupo());
+
             while (resultSet.next()){
                 lista.add(new Opcion(
                         resultSet.getInt("encuesta_tipo"),

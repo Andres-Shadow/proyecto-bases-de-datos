@@ -116,17 +116,13 @@ public class ControladorPrincipal implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Encuesta> observable, Encuesta oldValue, Encuesta newValue) {
                 encuestaSeleccionadaPresentacion = lst_encuetas.getSelectionModel().getSelectedItem();
+                lst_encuetas.setVisible(false);
                 setearValoresPresentacion();
-            }
-        });
-
-
-        list_opciones.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Opcion>() {
-            @Override
-            public void changed(ObservableValue<? extends Opcion> observable, Opcion oldValue, Opcion newValue) {
 
             }
         });
+
+
 
 
         String[] tipo = {"publica","privada"};
@@ -141,6 +137,8 @@ public class ControladorPrincipal implements Initializable {
 
         btnAddPregunta.setVisible(false);
     }
+
+
 
     @FXML
     public void crearEncuesta(){
@@ -221,9 +219,13 @@ public class ControladorPrincipal implements Initializable {
 
         if(this.listaPreguntasPresentacion.size()==1){
             txtPreguntaPresentacion.setText(this.listaPreguntasPresentacion.get(0).getEnunciado());
+            ArrayList<Opcion> opcions = conexion.listarOpcionesPregunta(this.listaPreguntasPresentacion.get(0));
+            setearOpcionesPresentacion(opcions);
         }else{
             if(contadorPreguntasPresentacion!=this.listaPreguntasPresentacion.size()){
                 txtPreguntaPresentacion.setText(this.listaPreguntasPresentacion.get(contadorPreguntasPresentacion).getEnunciado());
+                ArrayList<Opcion> opcions = conexion.listarOpcionesPregunta(this.listaPreguntasPresentacion.get(contadorPreguntasPresentacion));
+                setearOpcionesPresentacion(opcions);
                 this.contadorPreguntasPresentacion++;
             }
         }
@@ -244,6 +246,11 @@ public class ControladorPrincipal implements Initializable {
     public void setearOpciones(ArrayList<Opcion> lista){
         this.list_opciones.getItems().clear();
         this.list_opciones.getItems().addAll(lista);
+    }
+
+    private void setearOpcionesPresentacion(ArrayList<Opcion> opcions) {
+        this.listOpcionesPresentacion.getItems().clear();
+        this.listOpcionesPresentacion.getItems().addAll(opcions);
     }
 
     public void limpiar(){
