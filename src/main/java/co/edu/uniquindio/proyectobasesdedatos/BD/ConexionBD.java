@@ -1,8 +1,5 @@
 package co.edu.uniquindio.proyectobasesdedatos.BD;
-import co.edu.uniquindio.proyectobasesdedatos.Logica.Encuesta;
-import co.edu.uniquindio.proyectobasesdedatos.Logica.Grupo;
-import co.edu.uniquindio.proyectobasesdedatos.Logica.Opcion;
-import co.edu.uniquindio.proyectobasesdedatos.Logica.Pregunta;
+import co.edu.uniquindio.proyectobasesdedatos.Logica.*;
 import oracle.jdbc.proxy.annotation.Pre;
 
 import java.sql.*;
@@ -289,6 +286,92 @@ public class ConexionBD {
         return valor;
     }
 
+
+    public int contarPresentaciones(){
+        int valor = 0;
+        try{
+
+            statement = cx.createStatement();
+            resultSet = statement.executeQuery("select count(p.codigo) from presentacion p");
+
+            while (resultSet.next()){
+                valor = resultSet.getInt("COUNT(P.CODIGO)");
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return valor;
+    }
+
+
+    public Presentacion crearPresentacion(Encuesta encuesta, int estado){
+
+        int codigo = contarPresentaciones()+1;
+        Presentacion p=null;
+
+        try{
+            statement = cx.createStatement();
+
+            String sentencia2 = "insert into presentacion values ("+encuesta.getCodigo()+","+encuesta.getTipo()+","+codigo+","+estado+")";
+            System.out.println(sentencia2);
+            resultSet = statement.executeQuery(sentencia2);
+
+
+        }catch (SQLException e2){
+            e2.printStackTrace();
+        }
+
+        p = obtenerPresentacion(codigo);
+
+        return p;
+    }
+
+    public Presentacion obtenerPresentacion(int codigo){
+
+        Presentacion p=null;
+
+
+        try{
+            statement = cx.createStatement();
+
+            String sentencia2 = "select * from presentacion where codigo="+codigo;
+            System.out.println(sentencia2);
+            resultSet = statement.executeQuery(sentencia2);
+
+            while (resultSet.next()){
+                p = new Presentacion(
+                        resultSet.getInt("ENCUESTA"),
+                        resultSet.getInt("TIPO"),
+                        resultSet.getInt("CODIGO"),
+                        resultSet.getInt("ESTADO")
+                );
+            }
+
+
+        }catch (SQLException e2){
+            e2.printStackTrace();
+        }
+
+        return p;
+    }
+
+    public boolean insertarRespuesta(Encuesta encuesta, Presentacion presentacion, Opcion opcion, Pregunta pregunta ){
+
+        try{
+            statement = cx.createStatement();
+
+            String sentencia2 = "insert into respunica values ("+encuesta.getTipo()+","+encuesta.getCodigo()+","+presentacion.getCodigo()+","+pregunta.getId_grupo()+","+pregunta.getCodigo()+","+opcion.getCodigo()+")";
+            System.out.println(sentencia2);
+            resultSet = statement.executeQuery(sentencia2);
+
+
+        }catch (SQLException e2){
+            e2.printStackTrace();
+        }
+
+        return  true;
+    }
 
 
 

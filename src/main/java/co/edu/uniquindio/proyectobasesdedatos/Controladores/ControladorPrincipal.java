@@ -1,10 +1,7 @@
 package co.edu.uniquindio.proyectobasesdedatos.Controladores;
 
 import co.edu.uniquindio.proyectobasesdedatos.BD.ConexionBD;
-import co.edu.uniquindio.proyectobasesdedatos.Logica.Encuesta;
-import co.edu.uniquindio.proyectobasesdedatos.Logica.Grupo;
-import co.edu.uniquindio.proyectobasesdedatos.Logica.Opcion;
-import co.edu.uniquindio.proyectobasesdedatos.Logica.Pregunta;
+import co.edu.uniquindio.proyectobasesdedatos.Logica.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -33,6 +30,8 @@ public class ControladorPrincipal implements Initializable {
     private int contadorIndicesGrupo = 0;
     private int contadorPreguntasPresentacion = 0;
     private ArrayList<Pregunta> listaPreguntasPresentacion;
+    private Presentacion presentacion;
+    private Pregunta preguntaPresentacion;
 
 
     @FXML
@@ -116,6 +115,7 @@ public class ControladorPrincipal implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Encuesta> observable, Encuesta oldValue, Encuesta newValue) {
                 encuestaSeleccionadaPresentacion = lst_encuetas.getSelectionModel().getSelectedItem();
+                presentacion= conexion.crearPresentacion(encuestaSeleccionadaPresentacion, 1);
                 lst_encuetas.setVisible(false);
                 setearValoresPresentacion();
 
@@ -184,6 +184,12 @@ public class ControladorPrincipal implements Initializable {
         boolean centinela = conexion.terminarEncusta(this.encuesta, grupo);
     }
 
+
+    @FXML
+    public void responderPregunta(){
+
+    }
+
     @FXML
     public void crearGrupo(){
         String enunciado = txtNombreGrupo.getText();
@@ -233,6 +239,16 @@ public class ControladorPrincipal implements Initializable {
 
     }
 
+    @FXML
+    public void responder(){
+
+        Opcion seleccionada = listOpcionesPresentacion.getSelectionModel().getSelectedItem();
+        this.preguntaPresentacion = this.listaPreguntasPresentacion.get(contadorPreguntasPresentacion);
+
+        boolean correcto = conexion.insertarRespuesta(this.encuestaSeleccionadaPresentacion, this.presentacion, seleccionada, preguntaPresentacion);
+
+
+    }
 
     /**---------------- MEOTODOS VISUALES ------------------------**/
     public void setearListView(){
