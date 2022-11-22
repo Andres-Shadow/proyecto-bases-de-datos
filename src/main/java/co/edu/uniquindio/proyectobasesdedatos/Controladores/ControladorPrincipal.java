@@ -7,6 +7,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 
 
 import java.net.URL;
@@ -71,6 +72,9 @@ public class ControladorPrincipal implements Initializable {
 
 
     @FXML
+    private Pane pane_opciones;
+
+    @FXML
     private TextArea area_opciones;
 
 
@@ -97,6 +101,7 @@ public class ControladorPrincipal implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         this.listaPreguntasPresentacion = new ArrayList<>();
+        pane_opciones.setVisible(false);
         conexion = new ConexionBD();
         conexion.conectar();
         setearListView();
@@ -135,7 +140,6 @@ public class ControladorPrincipal implements Initializable {
         comboEdades.getItems().addAll(edades);
         comboGenero.getItems().addAll(genero);
 
-        btnAddPregunta.setVisible(false);
     }
 
 
@@ -160,7 +164,8 @@ public class ControladorPrincipal implements Initializable {
         else{
             System.out.println("sisas mi pez");
             this.encuesta = e;
-            this.btnAddPregunta.setVisible(true);
+
+            this.pane_opciones.setVisible(true);
         }
 
 
@@ -256,6 +261,12 @@ public class ControladorPrincipal implements Initializable {
                 ArrayList<Opcion> opcions = conexion.listarOpcionesPregunta(this.listaPreguntasPresentacion.get(contadorPreguntasPresentacion));
                 setearOpcionesPresentacion(opcions);
 
+            }else{
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setHeaderText(null);
+                alert.setTitle("Info");
+                alert.setContentText("ENCUESTA TERMINADA");
+                alert.showAndWait();
             }
         }
     }

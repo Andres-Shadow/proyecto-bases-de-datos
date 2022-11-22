@@ -172,7 +172,19 @@ public class ConexionBD {
                 resultSet = statement.executeQuery(sentencia);
                 System.out.println(sentencia);
 
-                sentencia = "insert into opcion values ("+e.getTipo()+","+e.getCodigo()+","+grupo+","+codigo+","+codigoOpcion+",\'opcion de respuesta de la pregunta"+codigo+"\')";
+                sentencia = "insert into opcion values ("+e.getTipo()+","+e.getCodigo()+","+grupo+","+codigo+","+codigoOpcion+",\'opcion 1 de respuesta de la pregunta"+codigo+"\')";
+                System.out.println(sentencia);
+                codigoOpcion+=1;
+                resultSet = statement.executeQuery(sentencia);
+                sentencia = "insert into opcion values ("+e.getTipo()+","+e.getCodigo()+","+grupo+","+codigo+","+codigoOpcion+",\'opcion 2 de respuesta de la pregunta"+codigo+"\')";
+                System.out.println(sentencia);
+                codigoOpcion+=1;
+                resultSet = statement.executeQuery(sentencia);
+                sentencia = "insert into opcion values ("+e.getTipo()+","+e.getCodigo()+","+grupo+","+codigo+","+codigoOpcion+",\'opcion 3 de respuesta de la pregunta"+codigo+"\')";
+                System.out.println(sentencia);
+                codigoOpcion+=1;
+                resultSet = statement.executeQuery(sentencia);
+                sentencia = "insert into opcion values ("+e.getTipo()+","+e.getCodigo()+","+grupo+","+codigo+","+codigoOpcion+",\'opcion 4 de respuesta de la pregunta"+codigo+"\')";
                 System.out.println(sentencia);
                 resultSet = statement.executeQuery(sentencia);
                 codigo++;
