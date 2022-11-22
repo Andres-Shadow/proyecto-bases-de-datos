@@ -2,6 +2,7 @@ package co.edu.uniquindio.proyectobasesdedatos.Controladores;
 
 import co.edu.uniquindio.proyectobasesdedatos.BD.ConexionBD;
 import co.edu.uniquindio.proyectobasesdedatos.Logica.Encuesta;
+import co.edu.uniquindio.proyectobasesdedatos.Logica.Grupo;
 import co.edu.uniquindio.proyectobasesdedatos.Logica.Opcion;
 import co.edu.uniquindio.proyectobasesdedatos.Logica.Pregunta;
 import javafx.beans.value.ChangeListener;
@@ -22,10 +23,15 @@ public class ControladorPrincipal implements Initializable {
 
     private ConexionBD conexion;
     private Pregunta preguntaSeleccionada;
+    private Opcion opcionSeleccionada;
     private Encuesta encuesta;
+
     private int grupo;
 
-    /**------ VISTA ----------**/
+    /**------ VISTA ENCUESTAS ----------**/
+    private Encuesta encuestaSeleccionadaPresentacion;
+    private int contadorIndicesGrupo=0;
+
 
     @FXML
     private TextArea area_pregunta;
@@ -67,6 +73,26 @@ public class ControladorPrincipal implements Initializable {
     private TextArea area_opciones;
 
 
+    /**----------------VISTA PRESENTACION ------------------**/
+
+    @FXML
+    private ListView<Encuesta> lst_encuetas;
+
+    @FXML
+    private TextField txtPreguntaPresentacion;
+
+    @FXML
+    private TextField txtNombreEncustaPresentacion;
+
+    @FXML
+    private TextField txtEnunciadoEncuestaPresentacion;
+
+    @FXML
+    private ListView<Opcion> listOpcionesPresentacion;
+
+
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         conexion = new ConexionBD();
@@ -80,6 +106,14 @@ public class ControladorPrincipal implements Initializable {
                 ArrayList<Opcion> opcions = conexion.listarOpcionesPregunta(preguntaSeleccionada);
                 setearOpciones(opcions);
 
+            }
+        });
+
+        lst_encuetas.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Encuesta>() {
+            @Override
+            public void changed(ObservableValue<? extends Encuesta> observable, Encuesta oldValue, Encuesta newValue) {
+                encuestaSeleccionadaPresentacion = lst_encuetas.getSelectionModel().getSelectedItem();
+                setearValoresPresentacion();
             }
         });
 
@@ -137,7 +171,6 @@ public class ControladorPrincipal implements Initializable {
 
     @FXML
     public void terminarEncuesta(){
-
         boolean centinela = conexion.terminarEncusta(this.encuesta, grupo);
     }
 
@@ -151,10 +184,38 @@ public class ControladorPrincipal implements Initializable {
         conexion.crearGrupo(encuesta_tipo, encuesta, codigo, enunciado);
         this.grupo = codigo;
     }
+
+
+    /**-----------------PRESENTACIÓN-----------------------**/
+
+
+    public void setearValoresPresentacion(){
+
+        ArrayList<Grupo> gruposEncuesta = conexion.obtenerNombreGrupo(this.encuestaSeleccionadaPresentacion);
+
+        if(gruposEncuesta.isEmpty())
+            System.out.println("grupovacio");
+        this.txtNombreEncustaPresentacion.setText(encuestaSeleccionadaPresentacion.getNombre());
+
+        if(gruposEncuesta.size()==1)
+            txtEnunciadoEncuestaPresentacion.setText(gruposEncuesta.get(0).getEnunciado());
+        else{
+            if(contadorIndicesGrupo!=gruposEncuesta.size()){
+                txtEnunciadoEncuestaPresentacion.setText(gruposEncuesta.get(contadorIndicesGrupo).getEnunciado());
+                this.contadorIndicesGrupo++;
+            }
+        }
+
+    }
+
+
     /**---------------- MEOTODOS VISUALES ------------------------**/
     public void setearListView(){
         ArrayList<Pregunta> lista = conexion.listarPreguntas();
         this.lista.getItems().addAll(lista);
+
+        ArrayList<Encuesta> lisa2 = conexion.listarEncuestas();
+        this.lst_encuetas.getItems().addAll(lisa2);
     }
 
     public void setearOpciones(ArrayList<Opcion> lista){

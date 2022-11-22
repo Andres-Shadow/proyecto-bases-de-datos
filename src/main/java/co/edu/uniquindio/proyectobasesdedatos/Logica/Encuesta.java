@@ -79,6 +79,11 @@ public class Encuesta   {
         this.preguntas = preguntas;
     }
 
+    @Override
+    public String toString() {
+        return nombre;
+    }
+
     public boolean agregarPreguntas(Pregunta p){
         if(!this.preguntas.contains(p)){
             this.preguntas.add(p);

@@ -4,7 +4,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
@@ -49,26 +48,26 @@
                      </children>
                   </AnchorPane>
                </content></Tab>
-          <Tab text="Preguntas">
+          <Tab text="Presentar">
                <content>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="219.0" layoutY="29.0" prefHeight="24.0" prefWidth="126.0" text="Gestión de preguntas">
+                        <Label layoutX="408.0" layoutY="32.0" prefHeight="24.0" prefWidth="210.0" text="Presentación de encuesta">
                            <font>
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label layoutX="45.0" layoutY="93.0" text="Pregunta" />
-                        <TextField layoutX="121.0" layoutY="89.0" prefHeight="26.0" prefWidth="447.0" />
-                        <Label layoutX="35.0" layoutY="140.0" text="Opciones" />
-                        <TextField layoutX="117.0" layoutY="164.0" prefHeight="26.0" prefWidth="451.0" />
-                        <TextField layoutX="117.0" layoutY="201.0" prefHeight="26.0" prefWidth="450.0" />
-                        <TextField layoutX="117.0" layoutY="239.0" prefHeight="26.0" prefWidth="450.0" />
-                        <TextField layoutX="117.0" layoutY="277.0" prefHeight="26.0" prefWidth="447.0" />
-                        <RadioButton layoutX="36.0" layoutY="169.0" mnemonicParsing="false" text="Correcta" />
-                        <RadioButton layoutX="37.0" layoutY="206.0" mnemonicParsing="false" text="Correcta" />
-                        <RadioButton layoutX="36.0" layoutY="244.0" mnemonicParsing="false" text="Correcta" />
-                        <RadioButton layoutX="38.0" layoutY="282.0" mnemonicParsing="false" text="Correcta" />
+                        <ListView fx:id="lst_encuetas" layoutX="21.0" layoutY="72.0" prefHeight="136.0" prefWidth="200.0" />
+                        <Label layoutX="270.0" layoutY="79.0" text="Nombre de la encuesta" />
+                        <Label layoutX="270.0" layoutY="140.0" text="Enunciado grupo" />
+                        <TextField fx:id="txtNombreEncustaPresentacion" layoutX="270.0" layoutY="97.0" prefHeight="26.0" prefWidth="484.0" />
+                        <TextField fx:id="txtEnunciadoEncuestaPresentacion" layoutX="270.0" layoutY="166.0" prefHeight="26.0" prefWidth="482.0" />
+                        <Label layoutX="270.0" layoutY="215.0" text="Pregutnas" />
+                        <TextField fx:id="txtPreguntaPresentacion" layoutX="270.0" layoutY="242.0" prefHeight="26.0" prefWidth="486.0" />
+                        <Label layoutX="270.0" layoutY="292.0" text="Opciones" />
+                        <ListView fx:id="listOpcionesPresentacion" layoutX="270.0" layoutY="319.0" prefHeight="114.0" prefWidth="486.0" />
+                        <Button layoutX="271.0" layoutY="460.0" mnemonicParsing="false" text="Seleccionar" />
+                        <Button layoutX="638.0" layoutY="460.0" mnemonicParsing="false" text="Siguiente pregunta" />
                      </children>
                   </AnchorPane>
                </content>

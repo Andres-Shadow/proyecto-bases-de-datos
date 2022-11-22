@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyectobasesdedatos.BD;
 import co.edu.uniquindio.proyectobasesdedatos.Logica.Encuesta;
+import co.edu.uniquindio.proyectobasesdedatos.Logica.Grupo;
 import co.edu.uniquindio.proyectobasesdedatos.Logica.Opcion;
 import co.edu.uniquindio.proyectobasesdedatos.Logica.Pregunta;
 import oracle.jdbc.proxy.annotation.Pre;
@@ -68,6 +69,12 @@ public class ConexionBD {
 
     }
 
+    public ArrayList<Pregunta> listarPreguntasSegunEncuesta(Encuesta encuesta){
+
+
+        return null;
+    }
+
 
     public ArrayList<Opcion> listarOpcionesPregunta(Pregunta pregunta){
         ArrayList<Opcion> lista = new ArrayList<>();
@@ -92,6 +99,30 @@ public class ConexionBD {
         return lista;
     }
 
+    public ArrayList<Encuesta> listarEncuestas (){
+        ArrayList<Encuesta> lista = new ArrayList<>();
+        try{
+            statement = cx.createStatement();
+            resultSet = statement.executeQuery("select * from encuesta");
+
+            while (resultSet.next()){
+                lista.add(
+                        new Encuesta(
+                                resultSet.getInt("CODIGO"),
+                                resultSet.getInt("TIPO"),
+                                resultSet.getString("NOMBRE"),
+                                resultSet.getInt("CATEGORIA"),
+                                resultSet.getInt("RANGO_EDADES"),
+                                resultSet.getInt("GENERO_OBJETIVO")
+                        )
+                );
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return lista;
+    }
 
 
     public boolean crearEncuesta(Encuesta e){
@@ -142,6 +173,36 @@ public class ConexionBD {
 
         return true;
 
+    }
+
+
+    public ArrayList<Grupo> obtenerNombreGrupo(Encuesta encuesta){
+
+        ArrayList<Grupo> list = new ArrayList<>();
+
+        try{
+            statement = cx.createStatement();
+            String sentencia = "select * from grupo_preguntas where encuesta="+encuesta.getCodigo();
+            resultSet = statement.executeQuery(sentencia);
+
+            System.out.println(sentencia);
+
+            while (resultSet.next()){
+                list.add(
+                        new Grupo(
+                                resultSet.getInt("ENCUESTA_TIPO"),
+                                resultSet.getInt("ENCUESTA"),
+                                resultSet.getInt("CODIGO"),
+                                resultSet.getString("ENUNCIADO")
+                        )
+                );
+            }
+
+        }catch (SQLException e2){
+            e2.printStackTrace();
+        }
+
+        return list;
     }
 
     public int contarCantidadPreguntas(){
